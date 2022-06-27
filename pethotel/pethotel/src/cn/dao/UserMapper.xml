@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.User">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="urole" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="userpassword" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="usex" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uphoto" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uphone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uaddress" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, urole, username, userpassword, uname, usex, uphoto, uphone, uaddress
+  </sql>
+
+  <!--登录-->
+  <select id="login" resultMap="BaseResultMap">
+    select * from tuser where username=#{username} and userpassword=#{userpassword}
+  </select>
+
+  <!--查询 全部-->
+  <select id="getUserList" resultMap="BaseResultMap">
+    select * from tuser
+    <where>
+      <if test="username!=null and username!=''">
+        and  username like '%${username}%'
+      </if>
+      <if test="urole!=null and urole!=''">
+        and  urole like '%${urole}%'
+      </if>
+    </where>
+  </select>
+
+  <!--查询 Id-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tuser
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--删除-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tuser
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <!--增加 全部-->
+  <insert id="insert" parameterType="cn.entity.User">
+    insert into tuser (id, urole, username, 
+      userpassword, uname, usex, 
+      uphoto, uphone, uaddress
+      )
+    values (#{id,jdbcType=INTEGER}, #{urole,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{userpassword,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, #{usex,jdbcType=VARCHAR}, 
+      #{uphoto,jdbcType=VARCHAR}, #{uphone,jdbcType=VARCHAR}, #{uaddress,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <!--增加 个别-->
+  <insert id="insertSelective" parameterType="cn.entity.User">
+    insert into tuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="urole != null">
+        urole,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="userpassword != null">
+        userpassword,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
+      <if test="usex != null">
+        usex,
+      </if>
+      <if test="uphoto != null">
+        uphoto,
+      </if>
+      <if test="uphone != null">
+        uphone,
+      </if>
+      <if test="uaddress != null">
+        uaddress,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="urole != null">
+        #{urole,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpassword != null">
+        #{userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null">
+        #{usex,jdbcType=VARCHAR},
+      </if>
+      <if test="uphoto != null">
+        #{uphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="uphone != null">
+        #{uphone,jdbcType=VARCHAR},
+      </if>
+      <if test="uaddress != null">
+        #{uaddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--更新 个别-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.User">
+    update tuser
+    <set>
+      <if test="urole != null">
+        urole = #{urole,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpassword != null">
+        userpassword = #{userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null">
+        usex = #{usex,jdbcType=VARCHAR},
+      </if>
+      <if test="uphoto != null">
+        uphoto = #{uphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="uphone != null">
+        uphone = #{uphone,jdbcType=VARCHAR},
+      </if>
+      <if test="uaddress != null">
+        uaddress = #{uaddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--更新 全部-->
+  <update id="updateByPrimaryKey" parameterType="cn.entity.User">
+    update tuser
+    set urole = #{urole,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      userpassword = #{userpassword,jdbcType=VARCHAR},
+      uname = #{uname,jdbcType=VARCHAR},
+      usex = #{usex,jdbcType=VARCHAR},
+      uphoto = #{uphoto,jdbcType=VARCHAR},
+      uphone = #{uphone,jdbcType=VARCHAR},
+      uaddress = #{uaddress,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

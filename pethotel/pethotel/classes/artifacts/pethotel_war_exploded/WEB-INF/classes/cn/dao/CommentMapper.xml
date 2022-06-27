@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.Comment">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="cuid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cuname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cbid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cbname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cbphoto" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ctime" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ccontent" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cuid, cuname, cbid, cbname, cbphoto, ctime, ccontent
+  </sql>
+  <!--查询 全部-->
+  <select id="getCommentList" resultMap="BaseResultMap">
+    select * from tcomment
+    <where>
+      <if test="cuid!=null and cuid!=''">
+        and  cuid like '%${cuid}%'
+      </if>
+      <if test="cbid!=null and cbid!=''">
+        and  cbid like '%${cbid}%'
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tcomment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tcomment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.entity.Comment">
+    insert into tcomment (id, cuid, cuname, 
+      cbid, cbname, cbphoto, 
+      ctime, ccontent)
+    values (#{id,jdbcType=INTEGER}, #{cuid,jdbcType=VARCHAR}, #{cuname,jdbcType=VARCHAR}, 
+      #{cbid,jdbcType=VARCHAR}, #{cbname,jdbcType=VARCHAR}, #{cbphoto,jdbcType=VARCHAR}, 
+      #{ctime,jdbcType=VARCHAR}, #{ccontent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.entity.Comment">
+    insert into tcomment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cuid != null">
+        cuid,
+      </if>
+      <if test="cuname != null">
+        cuname,
+      </if>
+      <if test="cbid != null">
+        cbid,
+      </if>
+      <if test="cbname != null">
+        cbname,
+      </if>
+      <if test="cbphoto != null">
+        cbphoto,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="ccontent != null">
+        ccontent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cuid != null">
+        #{cuid,jdbcType=VARCHAR},
+      </if>
+      <if test="cuname != null">
+        #{cuname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbid != null">
+        #{cbid,jdbcType=VARCHAR},
+      </if>
+      <if test="cbname != null">
+        #{cbname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbphoto != null">
+        #{cbphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="ccontent != null">
+        #{ccontent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.Comment">
+    update tcomment
+    <set>
+      <if test="cuid != null">
+        cuid = #{cuid,jdbcType=VARCHAR},
+      </if>
+      <if test="cuname != null">
+        cuname = #{cuname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbid != null">
+        cbid = #{cbid,jdbcType=VARCHAR},
+      </if>
+      <if test="cbname != null">
+        cbname = #{cbname,jdbcType=VARCHAR},
+      </if>
+      <if test="cbphoto != null">
+        cbphoto = #{cbphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="ccontent != null">
+        ccontent = #{ccontent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.entity.Comment">
+    update tcomment
+    set cuid = #{cuid,jdbcType=VARCHAR},
+      cuname = #{cuname,jdbcType=VARCHAR},
+      cbid = #{cbid,jdbcType=VARCHAR},
+      cbname = #{cbname,jdbcType=VARCHAR},
+      cbphoto = #{cbphoto,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=VARCHAR},
+      ccontent = #{ccontent,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

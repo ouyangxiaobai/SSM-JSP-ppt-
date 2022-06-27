@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.Order">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ouid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="obid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="otype" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="octime" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="oprice" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="onote" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ostate" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="oftime" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, ouid, obid, otype, octime, oprice, onote, ostate, oftime
+  </sql>
+
+  <!--查询 全部-->
+  <select id="getOrderOuidList" resultMap="BaseResultMap">
+    select * from torder
+    <where>
+      <if test="ouid!=null and ouid!=''">
+        and  ouid like '${ouid}%'
+      </if>
+      <if test="otype!=null and otype!=''">
+        and  otype like '${otype}%'
+      </if>
+    </where>
+  </select>
+
+  <!--查询 Id-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from torder
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--删除-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from torder
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <!--增加 全部-->
+  <insert id="insert" parameterType="cn.entity.Order">
+    insert into torder (id, ouid, obid, otype,
+      octime, oprice, onote, ostate, oftime
+      )
+    values (#{id,jdbcType=INTEGER}, #{ouid,jdbcType=VARCHAR}, #{obid,jdbcType=VARCHAR}, #{otype,jdbcType=VARCHAR},
+      #{octime,jdbcType=VARCHAR}, #{oprice,jdbcType=VARCHAR}, #{onote,jdbcType=VARCHAR},
+      #{ostate,jdbcType=VARCHAR}, #{oftime,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <!--增加 个别-->
+  <insert id="insertSelective" parameterType="cn.entity.Order">
+    insert into torder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="ouid != null">
+        ouid,
+      </if>
+      <if test="obid != null">
+        obid,
+      </if>
+      <if test="otype != null">
+        otype,
+      </if>
+      <if test="octime != null">
+        octime,
+      </if>
+      <if test="oprice != null">
+        oprice,
+      </if>
+      <if test="onote != null">
+        onote,
+      </if>
+      <if test="ostate != null">
+        ostate,
+      </if>
+      <if test="oftime != null">
+        oftime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ouid != null">
+        #{ouid,jdbcType=VARCHAR},
+      </if>
+      <if test="obid != null">
+        #{obid,jdbcType=VARCHAR},
+      </if>
+      <if test="otype != null">
+        #{otype,jdbcType=VARCHAR},
+      </if>
+      <if test="octime != null">
+        #{octime,jdbcType=VARCHAR},
+      </if>
+      <if test="oprice != null">
+        #{oprice,jdbcType=VARCHAR},
+      </if>
+      <if test="onote != null">
+        #{onote,jdbcType=VARCHAR},
+      </if>
+      <if test="ostate != null">
+        #{ostate,jdbcType=VARCHAR},
+      </if>
+      <if test="oftime != null">
+        #{oftime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--更新 个别-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.Order">
+    update torder
+    <set>
+      <if test="ouid != null">
+        ouid = #{ouid,jdbcType=VARCHAR},
+      </if>
+      <if test="obid != null">
+        obid = #{obid,jdbcType=VARCHAR},
+      </if>
+      <if test="otype != null">
+        otype = #{otype,jdbcType=VARCHAR},
+      </if>
+      <if test="octime != null">
+        octime = #{octime,jdbcType=VARCHAR},
+      </if>
+      <if test="oprice != null">
+        oprice = #{oprice,jdbcType=VARCHAR},
+      </if>
+      <if test="onote != null">
+        onote = #{onote,jdbcType=VARCHAR},
+      </if>
+      <if test="ostate != null">
+        ostate = #{ostate,jdbcType=VARCHAR},
+      </if>
+      <if test="oftime != null">
+        oftime = #{oftime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--更新 全部-->
+  <update id="updateByPrimaryKey" parameterType="cn.entity.Order">
+    update torder
+    set ouid = #{ouid,jdbcType=VARCHAR},
+      obid = #{obid,jdbcType=VARCHAR},
+      otype = #{otype,jdbcType=VARCHAR},
+      octime = #{octime,jdbcType=VARCHAR},
+      oprice = #{oprice,jdbcType=VARCHAR},
+      onote = #{onote,jdbcType=VARCHAR},
+      ostate = #{ostate,jdbcType=VARCHAR},
+      oftime = #{oftime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <display-name></display-name>
+     <!--spring 自带的过滤器-->
+    <filter>
+        <filter-name>CharacterEncoding</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharacterEncoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    
+    <!--↓ 重要 ↓-->
+    <!--指定 spring 的配置文件-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+    <!--配置一个监听器集成SSM-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!--↑ 重要 ↑-->
+
+    <!--核心控制器-->
+    <servlet>
+        <!--会决定你的配置文件的名字-->
+        <servlet-name>springMvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springMvc</servlet-name>
+        <!-- / 代表默认servlet，所有的样式之类的都会被 servlet 收到，相当于拦截了样式之类  并且会将Tomcat的defoult里的 / 覆盖-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+
+   
+
+    <welcome-file-list>
+        <welcome-file>qiantai/index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

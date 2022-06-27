@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.MessageMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.Message">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="muid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="muquestion" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mutime" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="maid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="maanswer" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="matime" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mstate" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, muid, muquestion, mutime, maid, maanswer, matime, mstate
+  </sql>
+
+  <!--查询 muid mstate-->
+  <select id="getMessageList" resultMap="BaseResultMap">
+    select * from tmessage
+    <where>
+      <if test="muid!=null and muid!=''">
+        and  muid like '${muid}%'
+      </if>
+      <if test="mstate!=null and mstate!=''">
+        and  mstate like '${mstate}%'
+      </if>
+    </where>
+  </select>
+
+  <!--查询 Id-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tmessage
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--删除-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tmessage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <!--增加 全部-->
+  <insert id="insert" parameterType="cn.entity.Message">
+    insert into tmessage (id, muid, muquestion, 
+      mutime, maid, maanswer, 
+      matime, mstate)
+    values (#{id,jdbcType=INTEGER}, #{muid,jdbcType=VARCHAR}, #{muquestion,jdbcType=VARCHAR}, 
+      #{mutime,jdbcType=VARCHAR}, #{maid,jdbcType=VARCHAR}, #{maanswer,jdbcType=VARCHAR}, 
+      #{matime,jdbcType=VARCHAR}), #{mstate,jdbcType=VARCHAR})
+  </insert>
+
+  <!--增加 个别-->
+  <insert id="insertSelective" parameterType="cn.entity.Message">
+    insert into tmessage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="muid != null">
+        muid,
+      </if>
+      <if test="muquestion != null">
+        muquestion,
+      </if>
+      <if test="mutime != null">
+        mutime,
+      </if>
+      <if test="maid != null">
+        maid,
+      </if>
+      <if test="maanswer != null">
+        maanswer,
+      </if>
+      <if test="matime != null">
+        matime,
+      </if>
+      <if test="mstate != null">
+        mstate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="muid != null">
+        #{muid,jdbcType=VARCHAR},
+      </if>
+      <if test="muquestion != null">
+        #{muquestion,jdbcType=VARCHAR},
+      </if>
+      <if test="mutime != null">
+        #{mutime,jdbcType=VARCHAR},
+      </if>
+      <if test="maid != null">
+        #{maid,jdbcType=VARCHAR},
+      </if>
+      <if test="maanswer != null">
+        #{maanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="matime != null">
+        #{matime,jdbcType=VARCHAR},
+      </if>
+      <if test="mstate != null">
+        #{mstate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--更新 个别-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.Message">
+    update tmessage
+    <set>
+      <if test="muid != null">
+        muid = #{muid,jdbcType=VARCHAR},
+      </if>
+      <if test="muquestion != null">
+        muquestion = #{muquestion,jdbcType=VARCHAR},
+      </if>
+      <if test="mutime != null">
+        mutime = #{mutime,jdbcType=VARCHAR},
+      </if>
+      <if test="maid != null">
+        maid = #{maid,jdbcType=VARCHAR},
+      </if>
+      <if test="maanswer != null">
+        maanswer = #{maanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="matime != null">
+        matime = #{matime,jdbcType=VARCHAR},
+      </if>
+      <if test="mstate != null">
+        mstate = #{mstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--更新 全部-->
+  <update id="updateByPrimaryKey" parameterType="cn.entity.Message">
+    update tmessage
+    set muid = #{muid,jdbcType=VARCHAR},
+      muquestion = #{muquestion,jdbcType=VARCHAR},
+      mutime = #{mutime,jdbcType=VARCHAR},
+      maid = #{maid,jdbcType=VARCHAR},
+      maanswer = #{maanswer,jdbcType=VARCHAR},
+      matime = #{matime,jdbcType=VARCHAR},
+      mstate = #{mstate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

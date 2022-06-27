@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.BusinessMapper">
+  <resultMap id="BaseResultMap" type="cn.entity.Business">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="btype" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="btroom" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="bname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="bsize" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="bprice" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="bphoto" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="bdetails" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, btype, btroom, bname, bsize, bprice, bphoto, bdetails
+  </sql>
+
+  <!--查询 全部-->
+  <select id="getBusinessList" resultMap="BaseResultMap">
+    select * from tbusiness
+    <where>
+      <if test="btype!=null and btype!=''">
+        and  btype like '${btype}%'
+      </if>
+      <if test="btroom!=null and btroom!=''">
+        and  btroom like '${btroom}%'
+      </if>
+    </where>
+  </select>
+
+  <!--查询 全部-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbusiness
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--查询 全部-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbusiness
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <!--查询 全部-->
+  <insert id="insert" parameterType="cn.entity.Business">
+    insert into tbusiness (id, btype, btroom, 
+      bname, bsize, bprice, 
+      bphoto, bdetails)
+    values (#{id,jdbcType=INTEGER}, #{btype,jdbcType=VARCHAR}, #{btroom,jdbcType=VARCHAR}, 
+      #{bname,jdbcType=VARCHAR}, #{bsize,jdbcType=VARCHAR}, #{bprice,jdbcType=VARCHAR}, 
+      #{bphoto,jdbcType=VARCHAR}, #{bdetails,jdbcType=VARCHAR})
+  </insert>
+
+  <!--查询 全部-->
+  <insert id="insertSelective" parameterType="cn.entity.Business">
+    insert into tbusiness
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="btype != null">
+        btype,
+      </if>
+      <if test="btroom != null">
+        btroom,
+      </if>
+      <if test="bname != null">
+        bname,
+      </if>
+      <if test="bsize != null">
+        bsize,
+      </if>
+      <if test="bprice != null">
+        bprice,
+      </if>
+      <if test="bphoto != null">
+        bphoto,
+      </if>
+      <if test="bdetails != null">
+        bdetails,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="btype != null">
+        #{btype,jdbcType=VARCHAR},
+      </if>
+      <if test="btroom != null">
+        #{btroom,jdbcType=VARCHAR},
+      </if>
+      <if test="bname != null">
+        #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="bsize != null">
+        #{bsize,jdbcType=VARCHAR},
+      </if>
+      <if test="bprice != null">
+        #{bprice,jdbcType=VARCHAR},
+      </if>
+      <if test="bphoto != null">
+        #{bphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="bdetails != null">
+        #{bdetails,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--查询 全部-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.entity.Business">
+    update tbusiness
+    <set>
+      <if test="btype != null">
+        btype = #{btype,jdbcType=VARCHAR},
+      </if>
+      <if test="btroom != null">
+        btroom = #{btroom,jdbcType=VARCHAR},
+      </if>
+      <if test="bname != null">
+        bname = #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="bsize != null">
+        bsize = #{bsize,jdbcType=VARCHAR},
+      </if>
+      <if test="bprice != null">
+        bprice = #{bprice,jdbcType=VARCHAR},
+      </if>
+      <if test="bphoto != null">
+        bphoto = #{bphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="bdetails != null">
+        bdetails = #{bdetails,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--查询 全部-->
+  <update id="updateByPrimaryKey" parameterType="cn.entity.Business">
+    update tbusiness
+    set btype = #{btype,jdbcType=VARCHAR},
+      btroom = #{btroom,jdbcType=VARCHAR},
+      bname = #{bname,jdbcType=VARCHAR},
+      bsize = #{bsize,jdbcType=VARCHAR},
+      bprice = #{bprice,jdbcType=VARCHAR},
+      bphoto = #{bphoto,jdbcType=VARCHAR},
+      bdetails = #{bdetails,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
